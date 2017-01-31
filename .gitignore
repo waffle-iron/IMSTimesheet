@@ -1,0 +1,7 @@
+# Basic python file ignores
+*.pyc
+__pycache__/
+env/
+
+# JetBrains IDES
+.idea/
