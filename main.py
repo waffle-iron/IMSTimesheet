@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from constants import Constants
+from constants import Colors
 
 def main():
     print("Hello World")
