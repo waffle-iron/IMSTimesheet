@@ -13,3 +13,11 @@ app.py - defines the tkinter application window
 Here is an article for a basic tkinter app.  
 http://usingpython.com/making-widgets-look-nice/  
 
+---
+### Project Steps
+1. Create primary UI, hardcode user values, research time handling
+2. Impliment sqlite3 database, with time handling
+3. Impliment config text file, and write to file capabilities
+4. Create Admin UI, yearly timesheet printouts.
+
+
