@@ -1,5 +1,5 @@
 # IMSTimesheet
-A simple time tracker program that is useds at the IMS department at CSUDH. Built using python3 and sqlite3.  
+A simple time tracker program that is used at the IMS department at CSUDH. Built using python3 and sqlite3.
 
 ---
 ### Project Organization
@@ -20,4 +20,10 @@ http://usingpython.com/making-widgets-look-nice/
 3. Impliment config text file, and write to file capabilities
 4. Create Admin UI, yearly timesheet printouts.
 
+----
+### Database columns
+1. autoincrement (int)
+2. name (string)
+3. clockIn (datetime)
+4. clockOut (datetime)
 
