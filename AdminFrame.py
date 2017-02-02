@@ -36,6 +36,7 @@ class AdminFrame(ttk.Frame):
         
         self.loginbutton.grid()
 
+'''
 # These are for quick testing of this file, 
 root = tk.Tk() #  root is the window
 
@@ -45,5 +46,5 @@ root.style = ttk.Style()
 root.style.theme_use("clam")
 
 root.minsize(width=400, height=400)
-app = AdminFrame(master=root)
-app.mainloop()
+app = AdminFrame(parent=root)
+app.mainloop()'''
