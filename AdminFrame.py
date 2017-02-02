@@ -9,14 +9,12 @@ import tkinter as tk
 from tkinter import ttk
 
 class AdminFrame(ttk.Frame):
-    def __init__(self, master=None):
-        tk.Frame.__init__(self, master)  # make the frame
-        self.master = master  # the master is the tkinter window manager
+    def __init__(self, parent=None, controller=None):
+        tk.Frame.__init__(self, parent)  # make the frame
         self.grid()  # use the grid layout manager
         self.create_widgets()  # call the create widget function
 
     def create_widgets(self):
-        self.master.title("Administrator Log In")
         self.username_label = ttk.Label(self, text="Username")
         self.username_entry = ttk.Entry(self, width=30)
         self.password_label = ttk.Label(self, text="Password")
