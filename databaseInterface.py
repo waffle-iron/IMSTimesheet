@@ -8,7 +8,7 @@ class databaseInterface:
     conn = sqlite3.connect(dbFile)
 
     if os.path.isfile(dbFile):
-        print("yes!");
+    print("yes!")
 
 
 
