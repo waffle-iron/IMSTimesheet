@@ -7,23 +7,24 @@
 
 import tkinter as tk
 from tkinter import ttk
+from constants import Colors
 
 class AdminFrame(ttk.Frame):
     def __init__(self, parent=None, controller=None):
         tk.Frame.__init__(self, parent)  # make the frame
         self.grid()  # use the grid layout manager
+        self.configure(background=Colors.BLUE)
         self.create_widgets()  # call the create widget function
 
     def create_widgets(self):
-        self.username_label = ttk.Label(self, text="Username")
+        self.username_label = ttk.Label(self, text="Username", background=Colors.BLUE)
         self.username_entry = ttk.Entry(self, width=30)
-        self.password_label = ttk.Label(self, text="Password")
+        self.password_label = ttk.Label(self, text="Password", background=Colors.BLUE)
         self.password_entry = ttk.Entry(self, width=30)
-        self.loginbutton = ttk.Button(self, text = "Submit", width = 10)
+        self.loginbutton = ttk.Button(self, text = "Submit", width=10)
         
         #apply special formatting
         self.password_entry.config(show = '*')
-
 
         # now we add the components to the grid
         # we wont use pack(), as grid is better for more complex layouts
@@ -36,15 +37,3 @@ class AdminFrame(ttk.Frame):
         
         self.loginbutton.grid()
 
-'''
-# These are for quick testing of this file, 
-root = tk.Tk() #  root is the window
-
-# lets use a theme!
-root.style = ttk.Style()
-#('clam', 'alt', 'default', 'classic')
-root.style.theme_use("clam")
-
-root.minsize(width=400, height=400)
-app = AdminFrame(parent=root)
-app.mainloop()'''

@@ -15,7 +15,7 @@ class Application(tk.Tk):
         self.style = tk.ttk.Style()  # use ttk themes
         self.style.theme_use("clam")
         self.minsize(width=200, height=200)
-        self.title("Hello World!!")
+        self.title("IMSTimesheeet")
 
         # handle multiple containers below
         container = tk.Frame(self) # hold all frames in this frame
