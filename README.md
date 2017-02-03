@@ -5,7 +5,8 @@ A simple time tracker program that is used at the IMS department at CSUDH. Built
 ### Project Organization
 constants.py - Program constants, such as colors and size.  
 main.py - starts the program, calls the window  
-app.py - defines the tkinter application window  
+io.py - handles file reads-writes
+databaseInterface - handles connecting to the sqlite3 database.db
 
 ---
 ### Development Resources
@@ -26,4 +27,5 @@ http://usingpython.com/making-widgets-look-nice/
 2. name (string)
 3. clockIn (datetime)
 4. clockOut (datetime)
+5. valid entry (boolean) - used to identify invalid clockOut dates
 
