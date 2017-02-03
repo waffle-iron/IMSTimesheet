@@ -3,12 +3,12 @@
 import sqlite3
 import os
 class databaseInterface:
-    'Handles all database functions'
+    '''Handles all database functions'''
     dbFile = "IMSTimesheet.db"
     conn = sqlite3.connect(dbFile)
 
     if os.path.isfile(dbFile):
-        print("yes!");
+    print("yes!")
 
 
 
