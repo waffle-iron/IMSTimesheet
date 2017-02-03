@@ -1,0 +1,9 @@
+# This is a comment, any line starting
+# with a hash DOES NOT GET READ
+# Each line below represents A USER. Add, remove users using 
+# this file :)
+test
+test2
+test3
+test4
+test6
