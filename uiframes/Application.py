@@ -6,7 +6,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from AdminFrame import AdminFrame
+from .AdminFrame import AdminFrame
 
 class Application(tk.Tk):
     def __init__(self, *args, **kwargs):
