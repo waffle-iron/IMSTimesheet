@@ -7,7 +7,7 @@
 
 import tkinter as tk
 from tkinter import ttk
-from constants import Colors
+from .Constants import Colors
 
 class AdminFrame(ttk.Frame):
     def __init__(self, parent=None, controller=None):
