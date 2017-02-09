@@ -86,7 +86,7 @@ def string_format(entries):
     return main_string
 
 #test
-#print(read_config())
-entries = [["test1", "12:12", "12:35", "02/02/17", "2", " . "],
-        ["test2", "01:01", "00:00", "02/02/17", "3", " X "]]
-print(string_format(entries))
+print(read_config())
+#entries = [["test1", "12:12", "12:35", "02/02/17", "2", " . "],
+#        ["test2", "01:01", "00:00", "02/02/17", "3", " X "]]
+#print(string_format(entries))

@@ -43,5 +43,7 @@ class EmployeeHome(ttk.Frame):
         self.month2.grid(row=0, column=3, padx=10, pady=10, ipadx=10, ipady=10)
 
 root = tk.Tk()
+root.style = tk.ttk.Style()
+root.style.theme_use("clam")
 app1= EmployeeHome(master=root)
 app1.mainloop()
