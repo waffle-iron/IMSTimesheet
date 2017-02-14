@@ -6,7 +6,8 @@
 import tkinter as tk
 from tkinter import ttk
 
-from .AdminFrame import AdminFrame
+from .AdminFrame import AdminFrame  # import frames here
+from .EmployeeHome import EmployeeHome
 
 class Application(tk.Tk):
     def __init__(self, *args, **kwargs):
@@ -24,7 +25,7 @@ class Application(tk.Tk):
 #        container.grid_columnconfigure(0, weight=1)
 
         self.frames={}
-        frameObjects = [AdminFrame]  # add new frames here
+        frameObjects = [AdminFrame, EmployeeHome]  # add new frames here
         for F in frameObjects:
             page_name = F.__name__
             frame = F(parent=container, controller=self)
@@ -32,7 +33,7 @@ class Application(tk.Tk):
 
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame("AdminFrame")
+        self.show_frame("EmployeeHome")
 
     def show_frame(self, page_name):
         frame = self.frames[page_name]

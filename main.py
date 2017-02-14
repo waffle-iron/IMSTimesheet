@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
 from tkinter import ttk
-from frames import Application
+from tkinter import ttk
+from uiframes import Application
 
 def main():
     root = Application.Application()
