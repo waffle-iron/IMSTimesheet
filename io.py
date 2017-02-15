@@ -3,8 +3,8 @@
 # 2/2/17
 
 import datetime
-from constants import HEADER_TEXT
-from constants import SPACER_TEXT
+from uiframes.Constants import HEADER_TEXT
+from uiframes.Constants import SPACER_TEXT
 
 SPACING = [17, 7, 8, 8, 10, 5]
 #TODO: Add dir specification
