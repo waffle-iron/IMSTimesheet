@@ -5,3 +5,5 @@ env/
 
 # JetBrains IDES
 .idea/
+IMSTimesheet.db-journal
+
