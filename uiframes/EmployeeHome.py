@@ -2,6 +2,8 @@ from tkinter import *
 import tkinter as tk
 from tkinter import ttk
 
+from .SuccessPopup import SuccessPopup
+
 class EmployeeHome(ttk.Frame):
     def __init__(self, parent=None, controller=None):
         tk.Frame.__init__(self, parent)
@@ -61,14 +63,13 @@ class EmployeeHome(ttk.Frame):
     def clock_in(self):
         print("Clocking in user: " + str(self.employee_in.get()));
         self.employee_in.set('')
+        my_popup = SuccessPopup("Successful Clock in", \
+                "Successfully clocked in user: " + str(self.employee_in.get()))
+        my_popup.mainloop()
 
     def clock_out(self):
         print("Clocking out user: " + str(self.employee_out.get()));
         self.employee_out.set('')
-
-
-#root = tk.Tk()
-#root.style = tk.ttk.Style()
-#root.style.theme_use("clam")
-#app1= EmployeeHome(master=root)
-#app1.mainloop()
+        my_popup = SuccessPopup("Successful Clockout", \
+                "Successfully clocked out user: " + str(self.employee_out.get()))
+        my_popup.mainloop()
