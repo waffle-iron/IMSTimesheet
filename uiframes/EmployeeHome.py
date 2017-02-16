@@ -9,7 +9,9 @@ class EmployeeHome(ttk.Frame):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.grid()
+        self.users = controller.users  #get the users from the Application
         self.create_widgets()
+
 
     def create_widgets(self):
         #self.parent.title("Employee Clock In System")
@@ -17,7 +19,7 @@ class EmployeeHome(ttk.Frame):
         self.employee_out_text = StringVar()
         #set value of the combobox
         self.employee_in = ttk.Combobox(self, state='readonly') 
-        self.employee_in.config(values=self.get_employees())
+        self.employee_in.config(values=self.users)
         self.employee_out = ttk.Combobox(self, state='readonly') 
         self.employee_out.config(values=self.get_logged_in_employees())
 
@@ -48,11 +50,6 @@ class EmployeeHome(ttk.Frame):
         #self.clock_in.configure(command=lambda: self.clock_in())
         #self.clock_out.bind('<Button-1>', self.clock_out)
 
-    def get_employees(self):
-        '''
-        Gets the employees from the config file
-        '''
-        return ["","one", "two", "three"];
 
     def get_logged_in_employees(self):
         '''

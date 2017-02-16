@@ -1,10 +1,15 @@
 #!/usr/bin/python3
 # Bradley Taniguchi
 # 2/2/17
+# This file has functions that can print to files
+# and read the given config file.
+
 
 import datetime
-from uiframes.Constants import HEADER_TEXT
-from uiframes.Constants import SPACER_TEXT
+from .Constants import HEADER_TEXT
+from .Constants import SPACER_TEXT
+import os
+
 
 SPACING = [17, 7, 8, 8, 10, 5]
 #TODO: Add dir specification
@@ -14,14 +19,16 @@ def write_to_file(entries, dir=".", filename="output.txt"):
         out.write(string_format(entries))
 
 #TODO: Add dir specification
-def read_config(dir=".", filename="config.txt"):
+def read_config(dir=".", filename="config.txt", verbose=False):
     print("Reading config file: " + filename)
     list = []
     with open(filename, newline='') as file:
         for line in file:
+            if verbose:
+                print("***" + str(line.strip('\n')))
             if line[0] != '#': # are comments
                 list.append(line.strip('\n'))
-
+    
     return list
 
 def string_format(entries):
