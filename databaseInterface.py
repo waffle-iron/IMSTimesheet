@@ -6,8 +6,9 @@ import sqlite3
 import os
 class databaseInterface:
     '''Handles all database functions'''
+    global dbFile
     dbFile = "IMSTimesheet.db"
-    conn = sqlite3.connect(dbFile)
+    #conn = sqlite3.connect(dbFile)
 
     if not os.path.isfile(dbFile):
          print("no!")
@@ -20,13 +21,22 @@ class databaseInterface:
                       Name TEXT NOT NULL,
                       DateIn TEXT NOT NULL,
                       DateOut TEXT NOT NULL,
-                      ValidEntry INTEGER NOT NULL );''')
+                      ValidEntry INTEGER NULL );''')
 
 
-    #else:
-        #print("Yes!")
+    else:
+        print("Yes!")
+        print("Connection successful")
 
+        def punchIn(self, Name, DateIn):
+            conn = sqlite3.connect(dbFile)
+            conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) \
+                        VALUES (" + Name + "," + DateIn + ")");
 
+        def punchOut(self, Name, DateOut):
+            conn = sqlite3.connect(dbFile)
+            conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) \
+                        VALUES (" + Name + "," + DateOut + ")");
 
 
 """
