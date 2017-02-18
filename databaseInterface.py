@@ -32,11 +32,13 @@ class databaseInterface:
             conn = sqlite3.connect(dbFile)
             conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) \
                         VALUES (" + Name + "," + DateIn + ")");
+            conn.close()
 
         def punchOut(self, Name, DateOut):
             conn = sqlite3.connect(dbFile)
             conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) \
                         VALUES (" + Name + "," + DateOut + ")");
+            conn.close()
 
 
 """
