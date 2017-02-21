@@ -2,9 +2,9 @@
 
 from tkinter import ttk
 from tkinter import ttk
-from uiframes.Application import Application
-from uiframes.ioHandler import write_to_file
-from uiframes.ioHandler import read_config
+from app.Application import Application
+from app.ioHandler import write_to_file
+from app.ioHandler import read_config
 
 
 def main():
