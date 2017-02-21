@@ -12,7 +12,10 @@ class Colors(object):
 
 class DatabaseConstants():
     TEST="this is a test"
-    
+
+class DateFormat():
+    FORMAT = "%m-%d-%y %H:%M:%S"
+
 HEADER_TEXT = """
 ******************************************************************************
 **********************************IMSTimesheet********************************

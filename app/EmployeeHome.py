@@ -1,8 +1,10 @@
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk
-
+from datetime import datetime
 from .SuccessPopup import SuccessPopup
+from .Constants import DateFormat
+from .database.databaseInterface import DatabaseInterface
 
 class EmployeeHome(ttk.Frame):
     def __init__(self, parent=None, controller=None):
@@ -58,8 +60,16 @@ class EmployeeHome(ttk.Frame):
         return []; # for now return nothing
 
     def clock_in(self):
-        print("Clocking in user: " + str(self.employee_in.get()));
+        name = str(self.employee_in.get())  # get username as string
+        time = datetime.now().strftime(DateFormat.FORMAT)  #get time right now
+        print("Clocking in user: " + name);
+        print("current time: "  + time)
         self.employee_in.set('')
+        #actually peform the clockin
+        database = DatabaseInterface()
+
+        database.punch_in(name, time)
+
         my_popup = SuccessPopup("Successful Clock in", \
                 "Successfully clocked in user: " + str(self.employee_in.get()))
         my_popup.mainloop()

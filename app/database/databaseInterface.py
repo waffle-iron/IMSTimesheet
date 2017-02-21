@@ -36,13 +36,15 @@ class DatabaseInterface:
         conn.close()
 
     def punch_in(self, Name, DateIn):
-        conn = sqlite3.connect(dbFile)
+        self.check()
+        conn = sqlite3.connect(self.dbFile)
         conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) \
                      VALUES (" + Name + "," + DateIn + ")");
         conn.close()
 
     def punch_out(self, Name, DateOut):
-        conn = sqlite3.connect(dbFile)
+        self.check()
+        conn = sqlite3.connect(self.dbFile)
         conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) \
                     VALUES (" + Name + "," + DateOut + ")");
         conn.close()
