@@ -4,7 +4,7 @@
 
 import sqlite3
 import os
-class databaseInterface:
+class DatabaseInterface:
     '''Handles all database functions'''
     def __init__(self, dbFile="IMSTimesheet.db"):
         self.dbFile = dbFile 
