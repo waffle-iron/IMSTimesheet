@@ -6,62 +6,45 @@ import sqlite3
 import os
 class databaseInterface:
     '''Handles all database functions'''
-    def __init__(self, dbFile="IMSTimesheet.db"):
-        self.dbFile = dbFile 
-        self.check()  # execute the check of the database
+    dbFile
+    dbFile = "IMSTimesheet.db"
+    #conn = sqlite3.connect(dbFile)
 
-    def check(self):
-        '''
-        This checks to see if the database exists
-        It if doesn't we create it
-        '''
-        if not os.path.isfile(self.dbFile):
-            print("No Databse found")
-            self.create_database()  # if it doesn't exist create it!
-            #print("no!")
-            #dbFile = open("IMSTimesheet.db", "w")
-            #conn = sqlite3.connect(dbFile)
-            #print("Opened database")
+    if not os.path.isfile(dbFile):
+         print("no!")
+         dbFile = open("IMSTimesheet.db", "w")
+         conn = sqlite3.connect(dbFile)
+         print("Opened datatbase")
 
-    
-    def create_database(self):
-        print("creating database...")
-        conn = sqlite3.connect(self.dbFile)
-        conn.execute('''CREATE TABLE TIME_SHEET
-                     ( AutoIncrememnt INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                     Name TEXT NOT NULL,
-                     DateIn TEXT NOT NULL,
-                     DateOut TEXT NOT NULL,
-                     ValidEntry INTEGER NULL );''')
-        conn.close()
+         conn.execute('''CREATE TABLE TIME_SHEET
+                      ( AutoIncrememnt INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                      Name TEXT NOT NULL,
+                      DateIn TEXT NOT NULL,
+                      DateOut TEXT NOT NULL,
+                      ValidEntry INTEGER NULL );''')
 
-    def punch_in(self, Name, DateIn):
-        conn = sqlite3.connect(dbFile)
-        conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) \
-                     VALUES (" + Name + "," + DateIn + ")");
-        conn.close()
 
-    def punch_out(self, Name, DateOut):
-        conn = sqlite3.connect(dbFile)
-        conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) \
-                    VALUES (" + Name + "," + DateOut + ")");
-        conn.close()
+    else:
+        print("Yes!")
+        print("Connection successful")
 
-    def delete_database(self):
-        print("deleting database")
-        os.remove(self.dbFile)
-        print("deleted Database!")
+        def punchIn(self, Name, DateIn):
+            conn = sqlite3.connect(dbFile)
+            conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) \
+                        VALUES (" + Name + "," + DateIn + ")");
+            conn.close()
+
+        def punchOut(self, Name, DateOut):
+            conn = sqlite3.connect(dbFile)
+            conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) \
+                        VALUES (" + Name + "," + DateOut + ")");
+            conn.close()
 
 
 """
 Put db in a folder
 Check if database exists
-print ("opened database succesfully");
-
-TODO:
-Need a function to get all users for a given month
-Need a function to get all users for all time
-"""
+print ("opened database succesfully");"""
 
 
 
