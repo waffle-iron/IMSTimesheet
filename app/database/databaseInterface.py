@@ -6,7 +6,7 @@ import sqlite3
 import os
 class databaseInterface:
     '''Handles all database functions'''
-    global dbFile
+    dbFile
     dbFile = "IMSTimesheet.db"
     #conn = sqlite3.connect(dbFile)
 
