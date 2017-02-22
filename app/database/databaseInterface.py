@@ -39,14 +39,14 @@ class DatabaseInterface:
         self.check()
         conn = sqlite3.connect(self.dbFile)
         conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) \
-                     VALUES (" + Name + "," + DateIn + ")");
+                     VALUES (?)", (Name, DateIn));
         conn.close()
 
     def punch_out(self, Name, DateOut):
         self.check()
         conn = sqlite3.connect(self.dbFile)
         conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) \
-                    VALUES (" + Name + "," + DateOut + ")");
+                    VALUES (?)", (Name, DateOut));
         conn.close()
 
     def delete_database(self):
@@ -56,10 +56,6 @@ class DatabaseInterface:
 
 
 """
-Put db in a folder
-Check if database exists
-print ("opened database succesfully");
-
 TODO:
 Need a function to get all users for a given month
 Need a function to get all users for all time
