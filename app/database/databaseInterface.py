@@ -22,6 +22,7 @@ class DatabaseInterface:
         """
         deconstructor method, used to close the database connection.
         """
+        print("closing database conn")
         self.conn.close()
 
 
@@ -63,13 +64,18 @@ class DatabaseInterface:
         """
         self.check()
         #lets check to see if the user is already clocked in
-        if( not self.check_user(Name)):
+        if(not self.check_user(Name)):
+            print("User not clocked in, clocking in...")
             self.conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) \
-                        VALUES (?, ?)", (Name.lower(), DateIn));
-            return true
+                        VALUES (?, ?)", (str(Name.lower()), DateIn))
+            self.conn.commit()
+            return True
+
         else: 
             #user is already clocked in!
-            return false
+            print("User is already clocked in")
+            return False
+
 
     def check_user(self, Name):
         """
@@ -82,8 +88,8 @@ class DatabaseInterface:
         """
         self.check()
         users = self.conn.execute("SELECT * FROM TIME_SHEET \
-                WHERE Name=? AND \
-                DateOut is NULL", Name.lower()).fetchall()
+                WHERE Name='%s' AND \
+                DateOut is NULL" % Name.lower()).fetchall()
         return (len(users) >= 1)
 
     def punch_out(self, Name, DateOut, ValidEntry=1):
@@ -101,8 +107,9 @@ class DatabaseInterface:
         self.check()
         self.conn.execute("UPDATE TIME_SHEET SET \
                     DateOut=?, ValidEntry=1 WHERE\
-                    Name=? AND DateOut is NULL", DateOut, Name)
-        
+                    Name=? AND DateOut is NULL", (DateOut, Name))
+
+        self.conn.commit()
 
 def delete_database():
     """
