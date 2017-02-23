@@ -3,7 +3,7 @@
 # This file deletes the database and rebuilds it using the database
 # interface. This is to assist in development
 
-from app.database.databaseInterface import DatabaseInterface
+from databaseInterface import DatabaseInterface
 
 print("Deleting database")
 di = DatabaseInterface()  # create the database object
