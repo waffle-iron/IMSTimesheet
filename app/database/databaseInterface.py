@@ -35,7 +35,14 @@ class DatabaseInterface:
             print("No Databse found")
             self.create_database()  # if it doesn't exist create it!
 
-    
+    def get_users(self):
+        """
+        Gets the users currently logged into the database.
+        These are defined by not having the clockout column filled
+        """
+        return self.conn.execute("SELECT Name FROM TIME_SHEET WHERE \
+                DateOut is NULL;").fetchall()
+
     def create_database(self):
         """
         Creates the database file using the database filename provided to the
@@ -67,7 +74,7 @@ class DatabaseInterface:
         if(not self.check_user(Name)):
             print("User not clocked in, clocking in...")
             self.conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) \
-                        VALUES (?, ?)", (str(Name.lower()), DateIn))
+                        VALUES (?, ?);", (str(Name.lower()), DateIn))
             self.conn.commit()
             return True
 
@@ -89,7 +96,7 @@ class DatabaseInterface:
         self.check()
         users = self.conn.execute("SELECT * FROM TIME_SHEET \
                 WHERE Name='%s' AND \
-                DateOut is NULL" % Name.lower()).fetchall()
+                DateOut is NULL;" % Name.lower()).fetchall()
         return (len(users) >= 1)
 
     def punch_out(self, Name, DateOut, ValidEntry=1):
@@ -105,10 +112,10 @@ class DatabaseInterface:
         Todo: Fix this function, as it doesn't do whats intended
         """
         self.check()
+        print("database check " + DateOut + " " + str(ValidEntry) + " " +Name)
         self.conn.execute("UPDATE TIME_SHEET SET \
-                    DateOut=?, ValidEntry=1 WHERE\
-                    Name=? AND DateOut is NULL", (DateOut, Name))
-
+                    DateOut=?, ValidEntry=? WHERE\
+                    Name=? AND DateOut is NULL;", (DateOut, ValidEntry, Name))
         self.conn.commit()
 
 def delete_database():

@@ -9,6 +9,21 @@ io.py - handles file reads-writes
 databaseInterface - handles connecting to the sqlite3 database.db
 
 ---
+### Installation and usage
+
+Be sure your computer has git, python3 and python3-tkinter package installed.
+Installation instructions are different for each platform. (google it :D)  
+
+Install using git with the commands:  
+`git clone https://github/bradtaniguchi/IMSTimesheet`  
+Then run the following command to run:
+`python3 main.py`  
+NOTE: If you have only 1 verion of python installed, you may use just python
+
+Use the rebuild.py script to delete the database, and create a new one.
+Obviously the deletes all data so be careful!
+
+---
 ### Development Resources
 
 Here is an article for a basic tkinter app.  

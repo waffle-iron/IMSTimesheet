@@ -57,7 +57,9 @@ class EmployeeHome(ttk.Frame):
         '''
         Gets the employees that are clockedIn from the database.
         '''
-        return []; # for now return nothing
+        database = DatabaseInterface()
+        print(database.get_users())
+        return database.get_users()
 
     def clock_in(self):
         name = str(self.employee_in.get())  # get username as string
@@ -71,12 +73,19 @@ class EmployeeHome(ttk.Frame):
         database.punch_in(name, time)
 
         my_popup = SuccessPopup("Successful Clock in", \
-                "Successfully clocked in user: " + str(self.employee_in.get()))
+                "Successfully clocked in user: " + name)
         my_popup.mainloop()
 
     def clock_out(self):
         print("Clocking out user: " + str(self.employee_out.get()));
+        name = str(self.employee_out.get())
         self.employee_out.set('')
+        time = datetime.now().strftime(DateFormat.FORMAT)
+        database = DatabaseInterface()
+        database.punch_out(name, time)
+        
+
         my_popup = SuccessPopup("Successful Clockout", \
-                "Successfully clocked out user: " + str(self.employee_out.get()))
+                "Successfully clocked out user: " + name)
+        self.employee_out.config(values=self.get_logged_in_employees())  #update list
         my_popup.mainloop()
