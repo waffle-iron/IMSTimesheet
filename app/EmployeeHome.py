@@ -63,30 +63,38 @@ class EmployeeHome(ttk.Frame):
 
     def clock_in(self):
         name = str(self.employee_in.get())  # get username as string
-        time = datetime.now().strftime(DateFormat.FORMAT)  #get time right now
-        print("Clocking in user: " + name);
-        print("current time: "  + time)
-        self.employee_in.set('')
-        #actually peform the clockin
-        database = DatabaseInterface()
-
-        database.punch_in(name, time)
-
-        my_popup = SuccessPopup("Successful Clock in", \
-                "Successfully clocked in user: " + name)
-        self.employee_out.config(values=self.get_logged_in_employees())
-        my_popup.mainloop()
+        if name:  # if its not empty
+            time = datetime.now().strftime(DateFormat.FORMAT)  #get time right now
+            print("Clocking in user: " + name);
+            print("current time: "  + time)
+            self.employee_in.set('')
+            #actually peform the clockin
+            database = DatabaseInterface()
+    
+            database.punch_in(name, time)
+    
+            my_popup = SuccessPopup("Successful Clock in", \
+                    "Successfully clocked in user: " + name)
+            self.employee_out.config(values=self.get_logged_in_employees())
+            my_popup.mainloop()
+        else:
+            my_popup = SuccessPopup("Error!" , \
+                    "Enter a valid name!")
+            my_popup.mainloop()
 
     def clock_out(self):
         print("Clocking out user: " + str(self.employee_out.get()));
         name = str(self.employee_out.get())
-        self.employee_out.set('')
-        time = datetime.now().strftime(DateFormat.FORMAT)
-        database = DatabaseInterface()
-        database.punch_out(name, time)
+        if name:
+            self.employee_out.set('')
+            time = datetime.now().strftime(DateFormat.FORMAT)
+            database = DatabaseInterface()
+            database.punch_out(name, time)
         
 
-        my_popup = SuccessPopup("Successful Clockout", \
-                "Successfully clocked out user: " + name)
-        self.employee_out.config(values=self.get_logged_in_employees())  #update list
-        my_popup.mainloop()
+            my_popup = SuccessPopup("Successful Clockout", \
+                    "Successfully clocked out user: " + name)
+            self.employee_out.config(values=self.get_logged_in_employees())  #update list
+            my_popup.mainloop()
+
+
