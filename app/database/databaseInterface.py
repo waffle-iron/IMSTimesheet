@@ -71,7 +71,10 @@ class DatabaseInterface:
         if list:
             #get the first item and its tuple
             print("DEBUG: " + str(list[0][0]))
-        return list
+            names = []
+            for name in list:
+                name.push(name[0])
+        return names
 
 
     def create_database(self):
