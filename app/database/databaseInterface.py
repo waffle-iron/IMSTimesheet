@@ -66,8 +66,13 @@ class DatabaseInterface:
         Gets the users currently logged into the database.
         These are defined by not having the clockout column filled
         """
-        return self.conn.execute("SELECT Name FROM TIME_SHEET WHERE \
+        list = self.conn.execute("SELECT Name FROM TIME_SHEET WHERE \
                 DateOut is NULL;").fetchall()
+        if list:
+            #get the first item and its tuple
+            print("DEBUG: " + str(list[0][0]))
+        return list
+
 
     def create_database(self):
         """
