@@ -4,6 +4,9 @@
 
 import sqlite3
 import os
+from datetime import datetime
+
+
 class DatabaseInterface:
     """
     Handles all database functions for the application. 
@@ -17,6 +20,7 @@ class DatabaseInterface:
         self.dbFile = dbFile
         self.check()  # execute the check of the database
         self.conn = sqlite3.connect(dbFile) # object database conn
+
        
     def __del__(self):
         """
@@ -29,11 +33,33 @@ class DatabaseInterface:
     def check(self):
         """
         This checks to see if the database exists
-        It if doesn't we create it
+        It if doesn't we create it.
+        If the database already exists we need to check the null date entires
+        if theose entry dates are not todays date, we close them and label
+        them invalid. (they didn't clock out for the day)
         """
         if not os.path.isfile(self.dbFile):
-            print("No Databse found")
+            print("No Database found")
             self.create_database()  # if it doesn't exist create it!
+        else: 
+            '''
+            The database exists, so we need to check the latest entries
+            if those entry dates are NOT todays date, and are still open
+            we close them
+            '''
+            print("Database found, checking integrity..")
+            time = datetime.now().strftime("%m-%d-%y %H:%M:%S")
+            print("Current time: " + time)
+            # First I need to get those clocked-in
+            self.conn = sqlite3.connect(self.dbFile)
+            users = self.conn.execute("SELECT * FROM \
+            TIME_SHEET WHERE DateOut is NULL").fetchall()
+            print("users loggedin " + str(users))
+            
+            #self.conn.execute("UPDATE TIME_SHEET SET \
+            #        DateOut=?, ValidEntry=? WHERE \
+            #        DateOut is NULL;", ('????', -1))
+
 
     def get_users(self):
         """
@@ -122,9 +148,9 @@ def delete_database():
     """
     utility function to delete the database file.
     """
-    print("deleting database")
-    os.remove("IMSTimesheet.db")
-    print("deleted Database!")
+    if os.path.isfile('IMSTimesheet.db'):
+        os.remove("IMSTimesheet.db")
+        print("deleted Database!")
 
 
 """

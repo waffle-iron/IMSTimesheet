@@ -8,5 +8,5 @@ from app.database.databaseInterface import DatabaseInterface
 
 delete_database()  # delete database
 di = DatabaseInterface()
-di.check()  # check if exist, if it doesn't create it
+#di.check()  # check if exist, if it doesn't create it
 

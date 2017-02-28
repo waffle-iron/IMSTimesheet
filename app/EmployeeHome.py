@@ -74,6 +74,7 @@ class EmployeeHome(ttk.Frame):
 
         my_popup = SuccessPopup("Successful Clock in", \
                 "Successfully clocked in user: " + name)
+        self.employee_out.config(values=self.get_logged_in_employees())
         my_popup.mainloop()
 
     def clock_out(self):
