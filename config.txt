@@ -2,8 +2,10 @@
 # with a hash DOES NOT GET READ
 # Each line below represents A USER. Add, remove users using 
 # this file :)
-test
-test2
-test3
-test4
-test6
+Vigeneareay P
+Mike D
+Shirley B
+Peyton P
+Brad T
+Miguel R
+Barush H
