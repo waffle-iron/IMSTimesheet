@@ -8,3 +8,4 @@ env/
 IMSTimesheet.db-journal
 IMSTimesheet.db
 *.db
+output.txt

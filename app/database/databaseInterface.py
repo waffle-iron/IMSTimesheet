@@ -30,7 +30,7 @@ class DatabaseInterface:
         self.conn.close()
 
 
-    def check(self):
+    def check(self, replace=True):
         """
         This checks to see if the database exists
         It if doesn't we create it.
@@ -41,7 +41,7 @@ class DatabaseInterface:
         if not os.path.isfile(self.dbFile):
             print("No Database found")
             self.create_database()  # if it doesn't exist create it!
-        else: 
+        elif replace: 
             '''
             The database exists, so we need to check the latest entries
             if those entry dates are NOT todays date, and are still open
@@ -56,10 +56,11 @@ class DatabaseInterface:
             TIME_SHEET WHERE DateOut is NULL").fetchall()
             print("users loggedin " + str(users))
             
-            #self.conn.execute("UPDATE TIME_SHEET SET \
-            #        DateOut=?, ValidEntry=? WHERE \
-            #        DateOut is NULL;", ('????', -1))
-
+            self.conn.execute("UPDATE TIME_SHEET SET \
+                    DateOut=?, ValidEntry=? WHERE \
+                    DateOut is NULL;", ('????', -1))
+        else:
+            print("Database exists, not replacing!")
 
     def get_users(self):
         """
@@ -77,6 +78,18 @@ class DatabaseInterface:
                 names.append(name[0])
         return names
 
+    def get_report_month(self) :
+        """
+        Reporting function, returns all users for this month.
+        """
+        self.check(replace=False)  # check the database
+
+        month = datetime.now().strftime("%m") #formats to EX: 02 
+        print("current month: " + month)
+        cursor = self.conn.cursor()  # get a cursor
+        entries = cursor.execute("SELECT * FROM TIME_SHEET WHERE \
+                DateIn LIKE ?;", (month+"%",)).fetchall()
+        return entries
 
     def create_database(self):
         """

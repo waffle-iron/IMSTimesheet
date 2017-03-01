@@ -11,7 +11,8 @@ from .Constants import SPACER_TEXT
 import os
 
 
-SPACING = [17, 7, 8, 8, 10, 5]
+#SPACING = [17, 7, 8, 8, 10, 5]
+SPACING = [0, 17, 19, 19, 6]
 #TODO: Add dir specification
 def write_to_file(entries, dir=".", filename="output.txt"):
     print("Writing to file: " + filename + " at dir " + dir)
@@ -50,12 +51,12 @@ def string_format(entries):
     main_string += "\n"
     # Define the sections to display
     main_string += "***" 
-    main_string += "Name".rjust(SPACING[0], ' ') + " | "
-    main_string += "Time In".rjust(SPACING[1], ' ') + " | "
-    main_string += "Time Out".rjust(SPACING[2], ' ') + " | "
-    main_string += "Date".rjust(SPACING[3], ' ') + " | "
-    main_string += "Calc Hours".rjust(SPACING[4], ' ') + " | "
-    main_string += "Valid".rjust(SPACING[5], ' ') + " ****"
+    main_string += "Name".rjust(SPACING[1], ' ') + " | "
+    main_string += "Time In".rjust(SPACING[2], ' ') + " | "
+    main_string += "Time Out".rjust(SPACING[3], ' ') + " | "
+    #main_string += "Date".rjust(SPACING[3], ' ') + " | "
+    #main_string += "Calc Hours".rjust(SPACING[4], ' ') + " | "
+    main_string += "Valid".rjust(SPACING[4], ' ') + " ****"
     main_string += "\n"
     # now for the entries
     for entry in entries:
@@ -69,21 +70,25 @@ def string_format(entries):
         # add a side bar to left side
         main_string += "***"
         # now actual string formatting, add name and padding
-        main_string += entry[0].rjust(SPACING[0], ' ')
-        main_string += " | "
+        main_string += entry[1].rjust(SPACING[1], ' ') + " | "
         
         # add Time in
-        main_string +=entry[1].rjust(SPACING[1],' ') + " | "
+        main_string += entry[2].rjust(SPACING[2],' ') + " | "
+
         # add Time out
-        main_string += entry[2].rjust(SPACING[2], ' ') + " | "
-        # add Date
         main_string += entry[3].rjust(SPACING[3], ' ') + " | "
 
+        # add Date
+        # main_string += entry[4].rjust(SPACING[4], ' ') + " | "
+
         #Add Times
-        main_string += entry[4].rjust(SPACING[4], ' ') + " | "
+        #main_string += str(entry[4]).rjust(SPACING[4], ' ') + " | "
 
         #Add Valid time
-        main_string += entry[5].rjust(SPACING[5], ' ')
+        if entry[4]:
+            main_string += "Y".rjust(SPACING[4])
+        else:
+            main_string += "N".rjust(SPACING[4])
         
         #Add side bar to right side 
         main_string += "*****"

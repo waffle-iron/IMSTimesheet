@@ -5,6 +5,8 @@ from datetime import datetime
 from .SuccessPopup import SuccessPopup
 from .Constants import DateFormat
 from .database.databaseInterface import DatabaseInterface
+from .ioHandler import write_to_file
+
 
 class EmployeeHome(ttk.Frame):
     def __init__(self, parent=None, controller=None):
@@ -39,7 +41,7 @@ class EmployeeHome(ttk.Frame):
         self.clock_in_button =ttk.Button(self, text = 'Clock In', command=lambda : self.clock_in())
         self.clock_out_button =ttk.Button(self, text = 'Clock Out', command=lambda : self.clock_out())
         self.admin = ttk.Button(self, text = 'Administrator')
-        self.printRecords = ttk.Button(self, text = 'Print Records')
+        self.printRecords = ttk.Button(self, text = 'Print Records', command=lambda: self.print_database())
 
         #render them to the tkinter gui
         self.clock_in_button.grid(row=0, column=0, padx = 10, pady=10,ipadx = 10, ipady=10)
@@ -97,4 +99,12 @@ class EmployeeHome(ttk.Frame):
             self.employee_out.config(values=self.get_logged_in_employees())  #update list
             my_popup.mainloop()
 
-
+    def print_database(self):
+        print("Printing database...")
+        database = DatabaseInterface()
+        users = database.get_report_month()
+        write_to_file(users)
+        path = "PATH"
+        my_popup = SuccessPopup("Printed Database", \
+                "Printed database at path: " + path)
+        my_popup.mainloop()
