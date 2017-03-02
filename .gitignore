@@ -2,7 +2,7 @@
 *.pyc
 __pycache__/
 env/
-
+config.txt
 # JetBrains IDES
 .idea/
 IMSTimesheet.db-journal
