@@ -56,9 +56,9 @@ class DatabaseInterface:
             TIME_SHEET WHERE DateOut is NULL").fetchall()
             print("users loggedin " + str(users))
             
-            self.conn.execute("UPDATE TIME_SHEET SET \
-                    DateOut=?, ValidEntry=? WHERE \
-                    DateOut is NULL;", ('????', -1))
+            #self.conn.execute("UPDATE TIME_SHEET SET \
+            #        DateOut=?, ValidEntry=? WHERE \
+            #        DateOut is NULL;", ('????', -1))
         else:
             print("Database exists, not replacing!")
 

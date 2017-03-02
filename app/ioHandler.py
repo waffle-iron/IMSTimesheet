@@ -12,7 +12,7 @@ import os
 
 
 #SPACING = [17, 7, 8, 8, 10, 5]
-SPACING = [0, 17, 19, 19, 6]
+SPACING = [0, 12, 17, 17, 10, 6]
 #TODO: Add dir specification
 def write_to_file(entries, dir=".", filename="output.txt"):
     print("Writing to file: " + filename + " at dir " + dir)
@@ -42,7 +42,7 @@ def string_format(entries):
     # get current date
     now = datetime.datetime.now()
     # format the current date
-    date_string = now.strftime("%d/%m/%y")
+    date_string = now.strftime("%m/%d/%y")
     # print out header text 
     main_string = HEADER_TEXT 
     main_string += "*********************************DATE: " + date_string
@@ -55,8 +55,8 @@ def string_format(entries):
     main_string += "Time In".rjust(SPACING[2], ' ') + " | "
     main_string += "Time Out".rjust(SPACING[3], ' ') + " | "
     #main_string += "Date".rjust(SPACING[3], ' ') + " | "
-    #main_string += "Calc Hours".rjust(SPACING[4], ' ') + " | "
-    main_string += "Valid".rjust(SPACING[4], ' ') + " ****"
+    main_string += "Calc Hours".rjust(SPACING[4], ' ') + " | "
+    main_string += "Valid".rjust(SPACING[5], ' ') + " *"
     main_string += "\n"
     # now for the entries
     for entry in entries:
@@ -76,22 +76,27 @@ def string_format(entries):
         main_string += entry[2].rjust(SPACING[2],' ') + " | "
 
         # add Time out
-        main_string += entry[3].rjust(SPACING[3], ' ') + " | "
+        if entry[3] is None:
+            main_string += '????'.rjust(SPACING[3], ' ') + " | "
+        else:
+            main_string += entry[3].rjust(SPACING[3], ' ') + " | "
 
         # add Date
         # main_string += entry[4].rjust(SPACING[4], ' ') + " | "
 
         #Add Times
-        #main_string += str(entry[4]).rjust(SPACING[4], ' ') + " | "
+
 
         #Add Valid time
         if entry[4]:
-            main_string += "Y".rjust(SPACING[4])
+            main_string += 'CALCTIME'.rjust(SPACING[4], ' ') + " | "
+            main_string += "Y  ".rjust(SPACING[5])
         else:
-            main_string += "N".rjust(SPACING[4])
+            main_string += '????'.rjust(SPACING[4], ' ') + " | "
+            main_string += "N  ".rjust(SPACING[5])
         
         #Add side bar to right side 
-        main_string += "*****"
+        main_string += "*"
 
         main_string += "\n" 
     main_string += SPACER_TEXT
