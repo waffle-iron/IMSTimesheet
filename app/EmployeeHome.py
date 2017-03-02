@@ -2,6 +2,7 @@ from tkinter import *
 import tkinter as tk
 from tkinter import ttk
 from datetime import datetime
+import os
 from .SuccessPopup import SuccessPopup
 from .Constants import DateFormat
 from .database.databaseInterface import DatabaseInterface
@@ -104,7 +105,7 @@ class EmployeeHome(ttk.Frame):
         database = DatabaseInterface()
         users = database.get_report_month()
         write_to_file(users)
-        path = "PATH"
+        os.chdir(os.path.dirname(__file__))
         my_popup = SuccessPopup("Printed Database", \
-                "Printed database at path: " + path)
+                "Printed database at path: " +os.getcwd())
         my_popup.mainloop()

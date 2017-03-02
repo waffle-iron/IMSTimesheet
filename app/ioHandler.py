@@ -8,6 +8,7 @@
 import datetime
 from .Constants import HEADER_TEXT
 from .Constants import SPACER_TEXT
+from .Constants import DateFormat
 import os
 
 
@@ -56,7 +57,7 @@ def string_format(entries):
     main_string += "Time Out".rjust(SPACING[3], ' ') + " | "
     #main_string += "Date".rjust(SPACING[3], ' ') + " | "
     main_string += "Calc Hours".rjust(SPACING[4], ' ') + " | "
-    main_string += "Valid".rjust(SPACING[5], ' ') + " *"
+    main_string += "Valid".rjust(SPACING[5], ' ') + "*"
     main_string += "\n"
     # now for the entries
     for entry in entries:
@@ -89,7 +90,11 @@ def string_format(entries):
 
         #Add Valid time
         if entry[4]:
-            main_string += 'CALCTIME'.rjust(SPACING[4], ' ') + " | "
+            #calculate the time:
+            start_time = datetime.datetime.strptime(entry[2], DateFormat.FORMAT) 
+            end_time = datetime.datetime.strptime(entry[3], DateFormat.FORMAT)
+
+            main_string += str(end_time-start_time).rjust(SPACING[4], ' ') + " | "
             main_string += "Y  ".rjust(SPACING[5])
         else:
             main_string += '????'.rjust(SPACING[4], ' ') + " | "
