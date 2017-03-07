@@ -89,14 +89,15 @@ def string_format(entries):
 
 
         #Add Valid time
-        if entry[4]:
+        print("TEST PRINTOUT: " + str(entry[4]))
+        if entry[4] == 1:  # 1 is valid entry
             #calculate the time:
             start_time = datetime.datetime.strptime(entry[2], DateFormat.FORMAT) 
             end_time = datetime.datetime.strptime(entry[3], DateFormat.FORMAT)
 
             main_string += str(end_time-start_time).rjust(SPACING[4], ' ') + " | "
             main_string += "Y  ".rjust(SPACING[5])
-        else:
+        else: 
             main_string += '????'.rjust(SPACING[4], ' ') + " | "
             main_string += "N  ".rjust(SPACING[5])
         

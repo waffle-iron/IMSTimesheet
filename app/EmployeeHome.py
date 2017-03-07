@@ -74,12 +74,16 @@ class EmployeeHome(ttk.Frame):
             #actually peform the clockin
             database = DatabaseInterface()
     
-            database.punch_in(name, time)
-    
-            my_popup = SuccessPopup("Successful Clock in", \
-                    "Successfully clocked in user: " + name)
-            self.employee_out.config(values=self.get_logged_in_employees())
-            my_popup.mainloop()
+            if database.punch_in(name, time):  #if we actually clocked in
+
+                my_popup = SuccessPopup("Successful Clock in", \
+                        "Successfully clocked in user: " + name)
+                self.employee_out.config(values=self.get_logged_in_employees())
+                my_popup.mainloop()
+            else:  # the user is already clocked in
+                my_popup = SuccessPopup("User Clocked In", "User "+name+" is already clocked in")
+                my_popup.mainloop()
+
         else:
             my_popup = SuccessPopup("Error!" , \
                     "Enter a valid name!")

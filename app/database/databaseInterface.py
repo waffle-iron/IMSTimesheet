@@ -18,8 +18,8 @@ class DatabaseInterface:
     """
     def __init__(self, dbFile="IMSTimesheet.db"):
         self.dbFile = dbFile
-        self.check()  # execute the check of the database
-        self.conn = sqlite3.connect(dbFile) # object database conn
+        #self.conn = sqlite3.connect(dbFile) # object database conn
+        self.check_exists()  # make sure the database exists
 
        
     def __del__(self):
@@ -29,51 +29,60 @@ class DatabaseInterface:
         print("closing database conn")
         self.conn.close()
 
-
-    def check(self, replace=True):
-        """
-        This checks to see if the database exists
-        It if doesn't we create it.
-        If the database already exists we need to check the null date entires
-        if theose entry dates are not todays date, we close them and label
-        them invalid. (they didn't clock out for the day)
-        """
+    def check_exists(self):
+        '''
+        This function does the simple task of checking if the database exists
+        if it doesn't this function calls the create database function
+        '''
         if not os.path.isfile(self.dbFile):
-            print("No Database found")
-            self.create_database()  # if it doesn't exist create it!
-        elif replace: 
-            '''
-            The database exists, so we need to check the latest entries
-            if those entry dates are NOT todays date, and are still open
-            we close them
-            '''
-            print("Database found, checking integrity..")
-            time = datetime.now().strftime("%m-%d-%y %H:%M:%S")
-            print("Current time: " + time)
-            # First I need to get those clocked-in
-            self.conn = sqlite3.connect(self.dbFile)
-            users = self.conn.execute("SELECT * FROM \
-            TIME_SHEET WHERE DateOut is NULL").fetchall()
-            print("users loggedin " + str(users))
-            
-            #self.conn.execute("UPDATE TIME_SHEET SET \
-            #        DateOut=?, ValidEntry=? WHERE \
-            #        DateOut is NULL;", ('????', -1))
+            print("no database found!")
+            self.create_database()
+            self.conn = sqlite3.connect(self.dbFile)  # create the connection
+            self.check_integrity()  # check the database data integrity
         else:
-            print("Database exists, not replacing!")
+            print("database exists!")
+            self.conn = sqlite3.connect(self.dbFile)  # create the connection
+            self.check_integrity()  # check the database data integrity
+
+
+    def check_integrity(self, replace=True):
+        '''
+        The database exists, so we need to check the latest entries
+        if those entry dates are NOT todays date, and are still open
+        we close them. This handles the data integrity of the database
+        '''
+        #print("Database found, checking integrity..")
+        time = datetime.now().strftime("%m-%d-%y %H:%M:%S")
+        #print("Current time: " + time)
+
+        # First I need to get those clocked-in
+        #self.conn = sqlite3.connect(self.dbFile)
+        #users = self.conn.execute("SELECT * FROM \
+        #TIME_SHEET WHERE DateOut is NULL").fetchall()
+        #print("users loggedin " + str(users))
+
+        dateStr = datetime.now().strftime('%m-%d') + "%"
+
+        self.conn.execute("UPDATE TIME_SHEET SET " +
+                "DateOut=?, ValidEntry=? WHERE " +
+                "DateOut is NULL AND DateIn NOT LIKE ?;", (time, -1, dateStr))
+        self.conn.commit()
+        #print("Database exists, not replacing!")
+ 
 
     def get_users(self):
         """
         Gets the users currently logged into the database.
         These are defined by not having the clockout column filled
         """
-        list = self.conn.execute("SELECT Name FROM TIME_SHEET WHERE \
-                DateOut is NULL;").fetchall()
+        self.check_integrity()
+        list = self.conn.execute("SELECT Name FROM TIME_SHEET WHERE " +
+                "DateOut is NULL;").fetchall()
 
         names = []
         if list:
             #get the first item and its tuple
-            print("DEBUG: " + str(list[0][0]))
+            #print("DEBUG: " + str(list[0][0]))
             for name in list:
                 names.append(name[0])
         return names
@@ -82,13 +91,13 @@ class DatabaseInterface:
         """
         Reporting function, returns all users for this month.
         """
-        self.check(replace=False)  # check the database
+        self.check_integrity()
 
         month = datetime.now().strftime("%m") #formats to EX: 02 
         print("current month: " + month)
         cursor = self.conn.cursor()  # get a cursor
-        entries = cursor.execute("SELECT * FROM TIME_SHEET WHERE \
-                DateIn LIKE ?;", (month+"%",)).fetchall()
+        entries = cursor.execute("SELECT * FROM TIME_SHEET WHERE " + 
+                "DateIn LIKE ?;", (month+"%",)).fetchall()
         return entries
 
     def create_database(self):
@@ -102,8 +111,9 @@ class DatabaseInterface:
                          ( AutoIncrememnt INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                          Name TEXT NOT NULL,
                          DateIn TEXT NOT NULL,
-                         DateOut TEXT,
+                         DateOut TEXT,`
                          ValidEntry INTEGER NULL );''')
+        conn.close()  # close the local connection
 
     def punch_in(self, Name, DateIn):
         """
@@ -117,12 +127,12 @@ class DatabaseInterface:
                 to check the date format.
         Returns: boolean value if the punch in was successful
         """
-        self.check()
+        self.check_integrity()
+
         #lets check to see if the user is already clocked in
         if(not self.check_user(Name)):
             print("User not clocked in, clocking in...")
-            self.conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) \
-                        VALUES (?, ?);", (str(Name.lower()), DateIn))
+            self.conn.execute("INSERT INTO TIME_SHEET (Name,DateIn) VALUES (?, ?);", (str(Name.lower()), DateIn))
             self.conn.commit()
             return True
 
@@ -141,10 +151,10 @@ class DatabaseInterface:
             bool: If the length of the number of users returned with the given
                 name, where their clock out times is null is GREATER than 1.
         """
-        self.check()
-        users = self.conn.execute("SELECT * FROM TIME_SHEET \
+        self.check_integrity()
+        users = self.conn.execute('''SELECT * FROM TIME_SHEET \
                 WHERE Name='%s' AND \
-                DateOut is NULL;" % Name.lower()).fetchall()
+                DateOut is NULL;''' % Name.lower()).fetchall()
         return (len(users) >= 1)
 
     def punch_out(self, Name, DateOut, ValidEntry=1):
@@ -159,7 +169,7 @@ class DatabaseInterface:
                 defaults to 1 for valid
         Todo: Fix this function, as it doesn't do whats intended
         """
-        self.check()
+        self.check_integrity()
         print("database check " + DateOut + " " + str(ValidEntry) + " " +Name)
         self.conn.execute("UPDATE TIME_SHEET SET \
                     DateOut=?, ValidEntry=? WHERE\
