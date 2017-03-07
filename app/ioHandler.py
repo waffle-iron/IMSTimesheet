@@ -38,7 +38,7 @@ def string_format(entries):
     does all the hard work in terms of formatting. 
     This function expects a 2d array of entires in the format:
         NAME, INTIME, OUTIME, DATE, HOURS, IS_VALID'''
-    users = []  # a list of names given
+    #users = []  # a list of names given
     user_times = dict()
     # get current date
     now = datetime.datetime.now()
@@ -61,13 +61,6 @@ def string_format(entries):
     main_string += "\n"
     # now for the entries
     for entry in entries:
-        # Handle calculating a users total time.
-        if entry[0] in users:
-            # then add their time to user_times
-            user_times[entry[0]] + int(entry[4])
-        else: 
-            # this is a new user, create a user_time
-            user_times[entry[0]] = 0 
         # add a side bar to left side
         main_string += "***"
         # now actual string formatting, add name and padding
@@ -89,14 +82,26 @@ def string_format(entries):
 
 
         #Add Valid time
-        print("TEST PRINTOUT: " + str(entry[4]))
         if entry[4] == 1:  # 1 is valid entry
             #calculate the time:
             start_time = datetime.datetime.strptime(entry[2], DateFormat.FORMAT) 
             end_time = datetime.datetime.strptime(entry[3], DateFormat.FORMAT)
-
-            main_string += str(end_time-start_time).rjust(SPACING[4], ' ') + " | "
+            delta_time = end_time - start_time
+            main_string += str(delta_time).rjust(SPACING[4], ' ') + " | "
             main_string += "Y  ".rjust(SPACING[5])
+
+            # Handle calculating a users total time.
+            if entry[1] in user_times: # and entry[4] is not None: 
+                # then add their deltatime objects to the user_times dictionary
+                user_times[entry[1]] = user_times[entry[1]] + delta_time
+                print("test : user times" + str(user_times[entry[1]]))
+            else: 
+                # this is a new user, create a user_time, and users
+                print("test created user")
+                user_times[entry[1]] = delta_time
+                #users.append(entry[1])
+            print("test deltatime: " + str(user_times[entry[1]]))
+
         else: 
             main_string += '????'.rjust(SPACING[4], ' ') + " | "
             main_string += "N  ".rjust(SPACING[5])
@@ -106,6 +111,15 @@ def string_format(entries):
 
         main_string += "\n" 
     main_string += SPACER_TEXT
+
+    # now that we have the end of the entry printout we need to append the total hours list
+    main_string += "\ni***TOTAL TIMES\n"
+    for user in user_times:
+        main_string += "***"
+        main_string += str(user).rjust(SPACING[1]) + " : "
+        main_string += str(user_times[user]).rjust(SPACING[2]) + "\n"
+    main_string += SPACER_TEXT
+
     return main_string
 
 #test
