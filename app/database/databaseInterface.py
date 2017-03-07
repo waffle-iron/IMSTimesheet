@@ -127,7 +127,7 @@ class DatabaseInterface:
                          ( AutoIncrememnt INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                          Name TEXT NOT NULL,
                          DateIn TEXT NOT NULL,
-                         DateOut TEXT,`
+                         DateOut TEXT,
                          ValidEntry INTEGER NULL );''')
         conn.close()  # close the local connection
 
