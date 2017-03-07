@@ -94,10 +94,26 @@ class DatabaseInterface:
         self.check_integrity()
 
         month = datetime.now().strftime("%m") #formats to EX: 02 
-        print("current month: " + month)
         cursor = self.conn.cursor()  # get a cursor
         entries = cursor.execute("SELECT * FROM TIME_SHEET WHERE " + 
                 "DateIn LIKE ?;", (month+"%",)).fetchall()
+        cursor.close()
+        return entries
+
+    def get_report_user(self, name):
+        """
+        Reporting function, returns all users for this month, with given name.
+        Args:
+            Name(str): name of the user to lookup with the given name.
+        Returns: array of entries with the given name for the given month
+        """
+        self.check_integrity()
+
+        month = datetime.now().strftime("%m")
+        cursor = self.conn.cursor()  # get a cursor
+        entries = cursor.execute("SELECT * FROM TIME_SHEET WHERE " + 
+                "Name=? AND DateIn LIKE ?", (name, month+"%")).fetchall()
+        cursor.close()
         return entries
 
     def create_database(self):

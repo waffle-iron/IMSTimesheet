@@ -41,13 +41,15 @@ class EmployeeHome(ttk.Frame):
         #instantiate all buttons
         self.clock_in_button =ttk.Button(self, text = 'Clock In', command=lambda : self.clock_in())
         self.clock_out_button =ttk.Button(self, text = 'Clock Out', command=lambda : self.clock_out())
-        self.admin = ttk.Button(self, text = 'Administrator')
+        self.admin = ttk.Button(self, text = 'Administrator')  # not currently used
         self.printRecords = ttk.Button(self, text = 'Print Records', command=lambda: self.print_database())
+        self.printSingleRecord = ttk.Button(self, text='Single record', command=lambda: self.print_database_user())
 
         #render them to the tkinter gui
         self.clock_in_button.grid(row=0, column=0, padx = 10, pady=10,ipadx = 10, ipady=10)
         self.clock_out_button.grid(row=1, column =0, padx = 10, pady=10, ipadx = 10, ipady=10)
         self.printRecords.grid(row=2, column=0, padx = 10, pady=10, ipadx = 10, ipady=10)
+        self.printSingleRecord.grid(row=2, column=3, padx=10, pady=10, ipadx=10, ipady=10)
         self.employee_in.grid(row=0, column=3, padx=10, pady=10, ipadx=10, ipady=10)
         self.employee_out.grid(row=1, column=3, padx=10, pady=10, ipadx=10, ipady=10)
         
@@ -113,3 +115,20 @@ class EmployeeHome(ttk.Frame):
         my_popup = SuccessPopup("Printed Database", \
                 "Printed database at path: " +os.getcwd())
         my_popup.mainloop()
+
+    def print_database_user(self):
+        name = self.employee_in.get().lower()  # get the user we want to get the data for
+        if name:  # if name isn't empty
+
+            self.employee_in.set("")
+
+            print("Printing database for user: " + name + "...")
+            database = DatabaseInterface()
+            users = database.get_report_user(name)
+            write_to_file(users)
+            os.chdir(os.path.dirname(__file__))
+            my_popup = SuccessPopup("Printed Database for user:" + name, \
+                "Printed database at path: " + os.getcwd())
+        else :  # the name field is empty
+            my_popup = SuccessPopup("Error", "No username in clockin field! Cant print!")
+            my_popup.mainloop()

@@ -113,7 +113,7 @@ def string_format(entries):
     main_string += SPACER_TEXT
 
     # now that we have the end of the entry printout we need to append the total hours list
-    main_string += "\ni***TOTAL TIMES\n"
+    main_string += "\n***TOTAL TIMES\n"
     for user in user_times:
         main_string += "***"
         main_string += str(user).rjust(SPACING[1]) + " : "
