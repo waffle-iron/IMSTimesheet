@@ -16,15 +16,15 @@ class SuccessPopup(tk.Toplevel):
         self.minsize(300, 300)
         self.maxsize(300, 300)
 
-        self.msg = tk.Message(self, text=text, padx=5, pady=5)
+        self.msg = tk.Message(self, text=text, padx=5, pady=5, width=250)
         self.button = ttk.Button(self, text="ok", command=self.exit)
 
         # center the popup in the window
         self.tk.eval('tk::PlaceWindow %s center' % self.winfo_pathname(self.winfo_id()))
         
         # handle placements
-        self.msg.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
-        self.button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        self.msg.place(rely=0.1, relwidth=1.0)
+        self.button.place(relx=0.5, rely=0.5, relwidth=1.0, anchor=tk.CENTER)
 
     def exit(self):
         '''

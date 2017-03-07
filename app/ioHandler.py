@@ -94,13 +94,10 @@ def string_format(entries):
             if entry[1] in user_times: # and entry[4] is not None: 
                 # then add their deltatime objects to the user_times dictionary
                 user_times[entry[1]] = user_times[entry[1]] + delta_time
-                print("test : user times" + str(user_times[entry[1]]))
             else: 
                 # this is a new user, create a user_time, and users
-                print("test created user")
                 user_times[entry[1]] = delta_time
                 #users.append(entry[1])
-            print("test deltatime: " + str(user_times[entry[1]]))
 
         else: 
             main_string += '????'.rjust(SPACING[4], ' ') + " | "
