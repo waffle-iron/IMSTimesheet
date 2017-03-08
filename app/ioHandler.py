@@ -16,9 +16,10 @@ import os
 SPACING = [0, 12, 17, 17, 10, 6]
 #TODO: Add dir specification
 def write_to_file(entries, dir=".", filename="output.txt"):
-    print("Writing to file: " + filename + " at dir " + dir)
+    print("Writing to file: " + filename + " at dir " + os.getcwd())
     with open(filename,'w') as out:
         out.write(string_format(entries))
+    print("Done writing")
 
 #TODO: Add dir specification
 def read_config(dir=".", filename="config.txt", verbose=False):

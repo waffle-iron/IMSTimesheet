@@ -13,6 +13,7 @@ class EmployeeHome(ttk.Frame):
     def __init__(self, parent=None, controller=None):
         tk.Frame.__init__(self, parent)
         self.parent = parent
+        self.database = DatabaseInterface()
         self.grid()
         self.users = controller.users  #get the users from the Application
         self.create_widgets()
@@ -62,9 +63,9 @@ class EmployeeHome(ttk.Frame):
         '''
         Gets the employees that are clockedIn from the database.
         '''
-        database = DatabaseInterface()
-        print(database.get_users())
-        return database.get_users()
+        #database = DatabaseInterface()        
+        users = self.database.get_users()
+        return users
 
     def clock_in(self):
         name = str(self.employee_in.get())  # get username as string
@@ -74,9 +75,9 @@ class EmployeeHome(ttk.Frame):
             print("current time: "  + time)
             self.employee_in.set('')
             #actually peform the clockin
-            database = DatabaseInterface()
+            #database = DatabaseInterface()
     
-            if database.punch_in(name, time):  #if we actually clocked in
+            if self.database.punch_in(name, time):  #if we actually clocked in
 
                 my_popup = SuccessPopup("Successful Clock in", \
                         "Successfully clocked in user: " + name)
@@ -97,8 +98,8 @@ class EmployeeHome(ttk.Frame):
         if name:
             self.employee_out.set('')
             time = datetime.now().strftime(DateFormat.FORMAT)
-            database = DatabaseInterface()
-            database.punch_out(name, time)
+            #database = DatabaseInterface()
+            self.database.punch_out(name, time)
         
 
             my_popup = SuccessPopup("Successful Clockout", \
@@ -107,11 +108,9 @@ class EmployeeHome(ttk.Frame):
             my_popup.mainloop()
 
     def print_database(self):
-        print("Printing database...")
-        database = DatabaseInterface()
-        users = database.get_report_month()
+        print("Printing database..." + os.getcwd())
+        users = self.database.get_report_month()
         write_to_file(users)
-        os.chdir(os.path.dirname(__file__))
         my_popup = SuccessPopup("Printed Database", \
                 "Printed database at path: " +os.getcwd())
         my_popup.mainloop()
@@ -123,12 +122,12 @@ class EmployeeHome(ttk.Frame):
             self.employee_in.set("")
 
             print("Printing database for user: " + name + "...")
-            database = DatabaseInterface()
-            users = database.get_report_user(name)
+            users = self.database.get_report_user(name)
             write_to_file(users)
-            os.chdir(os.path.dirname(__file__))
+
             my_popup = SuccessPopup("Printed Database for user:" + name, \
                 "Printed database at path: " + os.getcwd())
+            my_popup.mainloop()
         else :  # the name field is empty
             my_popup = SuccessPopup("Error", "No username in clockin field! Cant print!")
             my_popup.mainloop()
