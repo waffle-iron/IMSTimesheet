@@ -18,7 +18,7 @@ class DatabaseInterface:
     """
     def __init__(self, dbFile="IMSTimesheet.db"):
         self.dbFile = dbFile
-        self.conn = sqlite3.connect(dbFile) # object database conn
+        #self.conn = sqlite3.connect(dbFile) # object database conn
         self.check_exists()  # make sure the database exists
 
        
@@ -37,11 +37,12 @@ class DatabaseInterface:
         if not os.path.isfile(self.dbFile):
             print("no database found!")
             self.create_database()
-            #self.conn = sqlite3.connect(self.dbFile)  # create the connection
+            self.conn = sqlite3.connect(self.dbFile)  # create the connection
             self.check_integrity()  # check the database data integrity
         else:
             print("database exists!")
             self.check_integrity()  # check the database data integrity
+            self.conn = sqlite3.connect(self.dbFile)
 
 
     def check_integrity(self):
@@ -121,15 +122,15 @@ class DatabaseInterface:
         database object upon init.
         """
         print("creating database")
-        #conn = sqlite3.connect(self.dbFile) # note this is a LOCAL conneciton, just to create the database
-        self.conn.execute('''CREATE TABLE TIME_SHEET
+        conn = sqlite3.connect(self.dbFile) # note this is a LOCAL conneciton, just to create the database
+        conn.execute('''CREATE TABLE TIME_SHEET
                          ( AutoIncrememnt INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                          Name TEXT NOT NULL,
                          DateIn TEXT NOT NULL,
                          DateOut TEXT,
                          ValidEntry INTEGER NULL );''')
-        self.conn.commit()
-        #conn.close()  # close the local connection
+        conn.commit()
+        conn.close()  # close the local connection
 
     def punch_in(self, Name, DateIn):
         """
