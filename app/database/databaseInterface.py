@@ -41,8 +41,8 @@ class DatabaseInterface:
             self.check_integrity()  # check the database data integrity
         else:
             print("database exists!")
-            self.check_integrity()  # check the database data integrity
             self.conn = sqlite3.connect(self.dbFile)
+            self.check_integrity()  # check the database data integrity
 
 
     def check_integrity(self):

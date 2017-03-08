@@ -1,9 +1,6 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
-from tkinter import ttk
-from tkinter import ttk
 from app.Application import Application
-from app.ioHandler import write_to_file
 from app.ioHandler import read_config
 
 
