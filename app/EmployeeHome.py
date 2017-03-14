@@ -16,7 +16,17 @@ class EmployeeHome(ttk.Frame):
         self.database = DatabaseInterface()
         self.grid()
         self.users = controller.users  #get the users from the Application
+        if(len(self.users) == 0):
+            self.alert_no_users()
         self.create_widgets()
+
+    def alert_no_users(self):
+        '''
+        Alert the user that there is no config.txt file to get names from!
+        '''
+        my_popup = SuccessPopup("Error", "No users found within the config.txt! at path: {}".format(os.getcwd()))
+        my_popup.mainloop()
+        self.destroy()  # kill this window!
 
 
     def create_widgets(self):

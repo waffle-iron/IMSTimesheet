@@ -25,7 +25,7 @@ class Application(tk.Tk):
 #        container.grid_columnconfigure(0, weight=1)
 
         self.frames={}
-        frameObjects = [AdminFrame, EmployeeHome]  # add new frames here
+        frameObjects = [EmployeeHome, AdminFrame]  # add new frames here
         for F in frameObjects:
             page_name = F.__name__
             frame = F(parent=container, controller=self)
