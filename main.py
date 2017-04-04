@@ -9,8 +9,8 @@ def main():
     using ioHanlder, we need to read the config files, then pass them to the
     application root.
     '''
-    users = read_config(verbose=True)
-    root = Application(users=users)
+    #users = read_config(verbose=True)
+    root = Application()
     root.mainloop()
 
 

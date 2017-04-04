@@ -8,16 +8,17 @@ from tkinter import ttk
 
 from .AdminFrame import AdminFrame  # import frames here
 from .EmployeeHome import EmployeeHome
+from .ioHandler import read_config
 
 class Application(tk.Tk):
-    def __init__(self, users=[], *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         # add themes and other attribs to the Window
         self.style = tk.ttk.Style()  # use ttk themes
         self.style.theme_use("clam")
         self.minsize(width=200, height=200)
         self.title("IMSTimesheeet")
-        self.users = users  # passed number of users.
+        self.users = read_config(verbose=True) # passed number of users.
         # handle multiple containers below
         container = tk.Frame(self) # hold all frames in this frame
         container.pack(side="top", fill="both", expand=True)
