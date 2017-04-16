@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/bradtaniguchi/IMSTimesheet.png?label=ready&title=Ready)](https://waffle.io/bradtaniguchi/IMSTimesheet)
 # IMSTimesheet
 A simple time tracker program that is used at the IMS department at CSUDH. Built using python3 and sqlite3.
 
